@@ -1,0 +1,20 @@
+.social-icons a:hover {
+  background-color: #b1bb2f;
+}
+
+.bg-primary {
+  background-color: #b1bb2f !important;
+}
+
+.text-primary {
+  color: #b1bb2f !important;
+}
+
+a {
+  color: #b1bb2f;
+}
+
+a:hover, a:focus, a:active {
+  color: #b1bb2f;
+}
+
