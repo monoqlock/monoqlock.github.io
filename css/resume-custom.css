@@ -22,6 +22,10 @@ h3 {
     font-size: 1.8rem;
 }
 
+.resume-content p {
+    font-size: 0.9rem;
+}
+
 .resume-content .subheading {
     text-transform: none;
 }
