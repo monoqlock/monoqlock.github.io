@@ -1,0 +1,55 @@
+name: Update vendor and validate
+
+on:
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+
+jobs:
+  update-vendor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Update vendor files
+        run: npm run update-vendor
+
+      - name: Check for vendor changes
+        id: vendor-diff
+        run: |
+          if git diff --quiet vendor/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit vendor updates
+        if: steps.vendor-diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add vendor/
+          git commit -m "chore: update vendor files from npm dependencies"
+          git push
+
+      - name: Validate HTML structure
+        run: |
+          # Ensure key vendor files exist after update
+          test -f vendor/bootstrap/css/bootstrap.min.css
+          test -f vendor/bootstrap/js/bootstrap.bundle.min.js
+          test -f vendor/jquery/jquery.min.js
+          test -f vendor/jquery-easing/jquery.easing.min.js
+          echo "All required vendor files present."
