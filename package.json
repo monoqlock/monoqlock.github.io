@@ -7,8 +7,6 @@
     "update-vendor": "node scripts/update-vendor.js"
   },
   "devDependencies": {
-    "bootstrap": "^4.6.2",
-    "jquery": "^3.7.1",
-    "jquery.easing": "^1.4.1"
+    "bootstrap": "^5.3.3"
   }
 }

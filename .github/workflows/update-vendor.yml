@@ -50,6 +50,4 @@ jobs:
           # Ensure key vendor files exist after update
           test -f vendor/bootstrap/css/bootstrap.min.css
           test -f vendor/bootstrap/js/bootstrap.bundle.min.js
-          test -f vendor/jquery/jquery.min.js
-          test -f vendor/jquery-easing/jquery.easing.min.js
           echo "All required vendor files present."
